@@ -1,0 +1,61 @@
+{
+  "name": "aframe-stereo-component",
+  "version": "0.1.0",
+  "description": "Stereoscopic component for A-Frame VR.",
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify examples/main.js -o examples/build.js",
+    "dev": "budo examples/main.js:build.js --dir examples --port 8000 --live --open",
+    "dist": "webpack browser.js dist/aframe-stereo-component.js && webpack -p browser.js dist/aframe-stereo-component.min.js",
+    "postpublish": "npm run dist",
+    "preghpages": "npm run build && rm -rf gh-pages && cp -r examples gh-pages",
+    "ghpages": "npm run preghpages && ghpages -p gh-pages",
+    "test": "karma start ./tests/karma.conf.js",
+    "unboil": "node scripts/unboil.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oscarmarinmiro/aframe-stereo-component.git"
+  },
+  "keywords": [
+    "aframe",
+    "aframe-component",
+    "layout",
+    "aframe-vr",
+    "vr",
+    "aframe-layout",
+    "mozvr",
+    "webvr",
+    "stereo",
+    "stereoscopic",
+    "video",
+    "equirectangular"
+  ],
+  "author": "Óscar Marín Miró <oscar@outliers.es>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/oscarmarinmiro/aframe-stereo-component/issues"
+  },
+  "homepage": "https://github.com/oscarmarinmiro/aframe-stereo-component#readme",
+  "devDependencies": {
+    "aframe": "^0.1.2",
+    "aframe-core": "^0.1.5",
+    "browserify": "^12.0.1",
+    "browserify-css": "^0.8.3",
+    "budo": "^7.1.0",
+    "chai": "^3.4.1",
+    "chai-shallow-deep-equal": "^1.3.0",
+    "ghpages": "0.0.3",
+    "inquirer": "^0.12.0",
+    "karma": "^0.13.15",
+    "karma-browserify": "^4.4.2",
+    "karma-chai-shallow-deep-equal": "0.0.4",
+    "karma-firefox-launcher": "^0.1.7",
+    "karma-mocha": "^0.2.1",
+    "karma-mocha-reporter": "^1.1.3",
+    "karma-sinon-chai": "^1.1.0",
+    "mocha": "^2.3.4",
+    "shelljs": "^0.6.0",
+    "webpack": "^1.12.9"
+  }
+}
