@@ -1,6 +1,6 @@
-## aframe-layer-component
+## aframe-stereo-component
 
-An Layer component for [A-Frame](https://aframe.io) VR.
+An Stereo component for [A-Frame](https://aframe.io) VR.
 
 ### Properties
 
