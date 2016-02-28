@@ -42,3 +42,4 @@ Then register and use.
 require('aframe');
 require('aframe-layer-component');
 ```
+# aframe-stereo-component
