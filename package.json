@@ -1,6 +1,6 @@
 {
   "name": "aframe-stereo-component",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Stereoscopic component for A-Frame VR.",
   "main": "index.js",
   "scripts": {

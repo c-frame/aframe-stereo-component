@@ -121,6 +121,20 @@ Install and use by directly including the [browser files](dist):
 
 ```
 
+#### NPM Installation
+
+Install via NPM:
+
+```bash
+npm install aframe-layer-component
+```
+
+Then register and use.
+
+```js
+require('aframe');
+require('aframe-layer-component');
+```
 
 #### Credits
 
