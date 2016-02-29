@@ -81,6 +81,8 @@ Install and use by directly including the [browser files](dist):
 
 ```
 
+![](/cubes_stereo.png?raw=true "Two cubes in a scene, each one for each eye")
+
 #### Browser Installation. Two cubes, each for each eye
 
 Install and use by directly including the [browser files](dist):
