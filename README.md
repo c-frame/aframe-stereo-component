@@ -8,6 +8,8 @@ This component builds on the ['layer' concept of THREE.js] (https://github.com/m
 
 If a video is used in a sphere with the 'stereo' component active, **the component will also enable playback in mobile devices, by attaching a 'click' event on the rendering canvas**. Thus, in mobile devices you must click on the screen (via cardboard v2.0 button or with your finger) for the video to start playing.
 
+You can see demos for both examples below [here] (http://oscarmarinmiro.github.io/aframe-stereo-component)
+
 ### 'stereocam' component properties (only for camera)
 
 | Property | Description | Default Value |
