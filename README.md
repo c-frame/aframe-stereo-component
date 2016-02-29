@@ -1,20 +1,33 @@
 ## aframe-stereo-component
 
-An Stereo component for [A-Frame](https://aframe.io) VR.
+A stereo component for [A-Frame](https://aframe.io) VR.
 
-### Properties
+This component builds on the ['layer' concept of THREE.js] (https://github.com/mrdoob/three.js/issues/6437) and is really two components in one:
+- 'stereocam' component, with tells an aframe camera which 'eye' to render in case of monoscopic display (without 'Entering VR'). The camera will render all entities without the stereo component, but if it encounters an entity with the 'stereo' component active, it will render only those in the same eye as defined here.
+- 'stereo' component, which tells aframe to include an entity in either the 'right' eye or 'left' eye (you can also specify 'both', but this has the same effect as not using the 'stereo' component. The component also enables stereoscopic video rendering projected on spheres, so if a sphere (see example below) has the 'stereo' component enabled, if will only project half of the video texture (which one depends on the 'eye' property), so the result is stereoscopic video rendering. The component expects videos in side-by-side equirectangular projection (see the video example below).
+
+If a video is used in a sphere with the 'stereo' component active, *the component will also enable playback in mobile devices, by attaching a 'click' event on the rendering canvas*. Thus, in mobile devices you must click on the screen (via cardboard v2.0 button or with your finger) for the video to start playing.
+
+### 'stereocam' component properties (only for camera)
 
 | Property | Description | Default Value |
 | -------- | ----------- | ------------- |
-|          |             |               |
+| eye      |  which eye is enabled in monoscopic display ('left' or 'right')           | 'left               |
+
+### 'stereo' component properties (for other entities)
+| Property | Description | Default Value |
+| -------- | ----------- | ------------- |
+| eye      |  in which eye the entity is render VR mode ('left' or 'right')           | 'left               |
+| mode     | this property is for spheres holding a video texture. mode can be 'full' or 'half', depending if the original video is full 360 or only spans 180 degrees horizontally (half-dome)| 'full' |
 
 ### Usage
 
-#### Browser Installation
+#### Browser Installation. 360 stereoscopic video example
 
 Install and use by directly including the [browser files](dist):
 
 ```html
+<html>
 <head>
   <title>My A-Frame Scene</title>
   <script src="https://aframe.io/releases/latest/aframe.min.js"></script>
@@ -28,15 +41,19 @@ Install and use by directly including the [browser files](dist):
       http://pedrofe.com/rendering-for-oculus-rift-with-arnold/
       http://www.meryproject.com/
  -->
-
-      <video id="Mary" src="../basic_development/textures/MaryOculus.webm" loop></video>
+      <!-- side by side equirectangular projected video -->
+      <video id="Mary" src="examples/basic_development/textures/MaryOculus.webm" loop></video>
 
     </a-assets>
     <a-scene>
 
-
+      <!-- we tell here the camera to render (outside VR mode, in monoscopic mode) everything without the 'stereo' component active
+      and it it's active, only render those entities in the 'left' eye -->
+      
       <a-camera position="0 0 10" cursor-visible="false" stereocam="eye:left;"></a-camera>
-
+    
+      <!-- native sphere, will render on 'left' eye, and will take only the first half of the video for projection -->
+      
       <a-entity geometry="primitive: sphere;
                       radius: 100;
                       segmentsWidth: 64;
@@ -44,7 +61,9 @@ Install and use by directly including the [browser files](dist):
               material="shader: flat; src: #Mary;"
               scale="-1 1 1" rotation="0 180 0" stereo="eye:left">
       </a-entity>
-
+      
+      <!-- native sphere, will render on 'right' eye, and will take only the second half of the video for projection -->
+      
       <a-entity geometry="primitive: sphere;
                       radius: 100;
                       segmentsWidth: 64;
@@ -57,6 +76,38 @@ Install and use by directly including the [browser files](dist):
     </a-scene>
 
  </body>
+ </html>
+
+
+```
+
+#### Browser Installation. Two cubes, each for each eye
+
+Install and use by directly including the [browser files](dist):
+
+```html
+<html>
+<head>
+  <title>My A-Frame Scene</title>
+  <script src="https://aframe.io/releases/latest/aframe.min.js"></script>
+  <script src="aframe-stereo-component.js.min.js"></script>
+</head>
+<body>
+      <a-sky color="#FFF"></a-sky>
+      <a-light color="#333" position="0 5 0" type="ambient" intensity="0.2"></a-light>
+      <a-light type="point" color="#EEE" intensity="1.0" position="3 3 10"></a-light>
+      
+      <!-- 'left' eye entities will pass trough the camera in non-VR mode -->
+      
+      <a-camera position="0 0 10" cursor-color="black" stereocam="eye:left;"></a-camera>
+
+      <!-- in VR mode, the first box is displayed only in the left eye, the second one in the right eye -->
+      
+      <a-entity geometry="primitive: box" material="color: #C03546" stereo="eye:left"></a-entity>
+      <a-entity geometry="primitive: box" material="color: #3546C0" position="0 5 0" stereo="eye: right"></a-entity> -->
+
+ </body>
+ </html>
 
 
 ```
@@ -75,4 +126,3 @@ Then register and use.
 require('aframe');
 require('aframe-layer-component');
 ```
-# aframe-stereo-component
