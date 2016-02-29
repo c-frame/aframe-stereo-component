@@ -129,3 +129,6 @@ Then register and use.
 require('aframe');
 require('aframe-layer-component');
 ```
+## Credits
+
+The video used in the examples is from http://pedrofe.com/rendering-for-oculus-rift-with-arnold/ and http://www.meryproject.com/
