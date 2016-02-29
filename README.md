@@ -93,6 +93,7 @@ Install and use by directly including the [browser files](dist):
   <script src="aframe-stereo-component.js.min.js"></script>
 </head>
 <body>
+  <a-scene>
       <a-sky color="#FFF"></a-sky>
       <a-light color="#333" position="0 5 0" type="ambient" intensity="0.2"></a-light>
       <a-light type="point" color="#EEE" intensity="1.0" position="3 3 10"></a-light>
@@ -104,7 +105,9 @@ Install and use by directly including the [browser files](dist):
       <!-- in VR mode, the first box is displayed only in the left eye, the second one in the right eye -->
       
       <a-entity geometry="primitive: box" material="color: #C03546" stereo="eye:left"></a-entity>
-      <a-entity geometry="primitive: box" material="color: #3546C0" position="0 5 0" stereo="eye: right"></a-entity> -->
+      <a-entity geometry="primitive: box" material="color: #3546C0" position="0 5 0" stereo="eye: right"></a-entity>
+      
+  </a-scene>
 
  </body>
  </html>
