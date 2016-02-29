@@ -119,20 +119,7 @@ Install and use by directly including the [browser files](dist):
 
 ```
 
-#### NPM Installation
 
-Install via NPM:
-
-```bash
-npm install aframe-layer-component
-```
-
-Then register and use.
-
-```js
-require('aframe');
-require('aframe-layer-component');
-```
 #### Credits
 
 The video used in the examples is from http://pedrofe.com/rendering-for-oculus-rift-with-arnold/, from the project http://www.meryproject.com/
