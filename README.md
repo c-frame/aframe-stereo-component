@@ -22,6 +22,8 @@ If a video is used in a sphere with the 'stereo' component active, **the compone
 
 ### Usage
 
+!["Stereoscopic video"](/video_stereo.png?raw=true "Stereoscopic video")
+
 #### Browser Installation. 360 stereoscopic video example
 
 Install and use by directly including the [browser files](dist):
@@ -83,7 +85,7 @@ Install and use by directly including the [browser files](dist):
 
 !["Two cubes in a scene, each one for each eye"](/cubes_stereo.png?raw=true "Two cubes in a scene, each one for each eye")
 
-#### Browser Installation. Two cubes, each for each eye
+#### Browser Installation. Two cubes, each one for each eye
 
 Install and use by directly including the [browser files](dist):
 
