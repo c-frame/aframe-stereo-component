@@ -31,7 +31,7 @@
     "video",
     "equirectangular"
   ],
-  "author": "Óscar Marín Miró <oscar@outliers.es>",
+  "author": "Óscar Marín Miró <oscar@outliers.es> @oscarmarinmiro",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/oscarmarinmiro/aframe-stereo-component/issues"
