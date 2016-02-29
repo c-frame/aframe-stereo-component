@@ -132,4 +132,7 @@ require('aframe-layer-component');
 #### Credits
 
 The video used in the examples is from http://pedrofe.com/rendering-for-oculus-rift-with-arnold/, from the project http://www.meryproject.com/
-Boilerplate code from https://github.com/ngokevin/aframe-component-boilerplate . Code for adjusting sphere face vertex is from https://github.com/mrdoob/three.js/blob/master/examples/webvr_video.html
+
+Boilerplate code from https://github.com/ngokevin/aframe-component-boilerplate
+
+Code for adjusting sphere face vertex is from https://github.com/mrdoob/three.js/blob/master/examples/webvr_video.html
