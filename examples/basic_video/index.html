@@ -3,18 +3,22 @@
     <title>A-Frame Layer Component - Basic</title>
     <script src="../build.js"></script>
   </head>
-  <body> 
+  <body>
 
     <a-assets>
 
-<!--       
+<!--
       stereoscopic panoramic render by
       http://pedrofe.com/rendering-for-oculus-rift-with-arnold/
       http://www.meryproject.com/
- -->     
+ -->
 
-      <video id="Mary" src="textures/MaryOculus.webm" loop></video>
-    </a-assets>   
+      <video id="Mary" loop>
+          <source src="textures/MaryOculus.webm" type="video/webm"/>
+          <source src="textures/MaryOculus.mp4" type="video/mp4"/>
+      </video>
+
+    </a-assets>
     <a-scene>
 
 
@@ -41,4 +45,3 @@
 
   </body>
 </html>
-
