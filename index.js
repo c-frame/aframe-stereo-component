@@ -3,7 +3,7 @@ module.exports = {
    // Put an object into left, right or both eyes.
    // If it's a video sphere, take care of correct stereo mapping for both eyes (if full dome)
    // or half the sphere (if half dome)
-   
+
   'stereo_component' : {
       schema: {
         eye: { type: 'string', default: "left"},
@@ -16,7 +16,7 @@ module.exports = {
           // Check if it's a sphere w/ video material, and if so
 
           if(object3D.geometry instanceof THREE.SphereGeometry
-                   && 'map' in object3D.material 
+                   && 'map' in object3D.material
                    && object3D.material.map instanceof THREE.VideoTexture) {
 
 
@@ -67,28 +67,41 @@ module.exports = {
                       for (var i = 0; i < uvs.length; i++) {
                           for (var j = 0; j < 3; j++) {
                               uvs[ i ][ j ].x *= 0.5;
-                              uvs[ i ][ j ].x += 0.5;                            
+                              uvs[ i ][ j ].x += 0.5;
                           }
                       }
 
-                }                             
+                }
 
 
           }
 
-       }, 
-       // On element update, put in the right layer, 0:both, 1:left, 2:right (spheres or not)
+       },
+       // On element update, put in the correct layer, 0:both, 1:left, 2:right (spheres or not)
 
        update: function(oldData){
 
             var object3D = this.el.object3D;
             var data = this.data;
 
+            var childrenTypes = [];
+
+            this.el.object3D.children.forEach( function (item, index, array) {
+                childrenTypes[index] = item.type;
+            });
+
+            // Retrieve the Mesh object
+            var rootIndex = childrenTypes.indexOf("Mesh");
+            var rootMesh = this.el.object3D.children[rootIndex];
+            console.log(rootMesh);
+
             if(data.eye === "both"){
-              object3D.layers.set(0);
+              rootMesh.layers.set(0);
+              this.layer_changed = true;
             }
             else{
-              object3D.layers.set(data.eye === 'left' ? 1:2);
+              rootMesh.layers.set(data.eye === 'left' ? 1:2);
+              this.layer_changed = true;
             }
 
        }
@@ -106,21 +119,19 @@ module.exports = {
        // Use update every tick if flagged as 'not changed yet'
 
        init: function(){
-            // Register update on tick
-            this.el.sceneEl.addBehavior(this);
             this.layer_changed = false;
        },
 
        update: function(oldData){
 
-            
+
             var originalData = this.data;
 
             // If layer never changed
 
             if(!this.layer_changed){
 
-            // because stereocam component should be attached to an a-camera element
+            // because stereocam component is a child of an a-camera element,
             // need to get down to the root PerspectiveCamera before addressing layers
 
             // Gather the children of this a-camera and identify types
