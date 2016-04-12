@@ -38,6 +38,8 @@ Install and use by directly including the [browser files](dist):
   <script src="aframe-stereo-component.js.min.js"></script>
 </head>
 <body>
+    <a-scene>
+
     <a-assets>
 
 <!--
@@ -49,7 +51,6 @@ Install and use by directly including the [browser files](dist):
       <video id="Mary" src="examples/basic_development/textures/MaryOculus.webm" loop></video>
 
     </a-assets>
-    <a-scene>
 
       <!-- we tell here the camera to render (outside VR mode, in monoscopic mode) everything without the 'stereo' component active
       and it it's active, only render those entities in the 'left' eye -->
@@ -63,7 +64,7 @@ Install and use by directly including the [browser files](dist):
                       segmentsWidth: 64;
                       segmentsHeight: 64;"
               material="shader: flat; src: #Mary;"
-              scale="-1 1 1" rotation="0 180 0" stereo="eye:left">
+              scale="-1 1 1" stereo="eye:left">
       </a-entity>
       
       <!-- native sphere, will render on 'right' eye, and will take only the second half of the video for projection -->
@@ -73,7 +74,7 @@ Install and use by directly including the [browser files](dist):
                       segmentsWidth: 64;
                       segmentsHeight: 64;"
               material="shader: flat; src: #Mary;"
-              scale="-1 1 1" rotation="0 180 0" stereo="eye:right">
+              scale="-1 1 1" stereo="eye:right">
       </a-entity>
 
 
