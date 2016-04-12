@@ -185,39 +185,37 @@
 	            this.layer_changed = false;
 	       },
 
-	       update: function(oldData){
+	       tick: function(oldData){
 
-	            var object3D = this.el.object3D;
-	            var data = this.data;
+	            
+	            var originalData = this.data;
 
 	            // If layer never changed
 
 	            if(!this.layer_changed){
 
-	                // Horrible and inelegant code to access the terminal node attached to this element, 
-	                // which is the actual PerspectiveCamera...
+	            // because stereocam component should be attached to an a-camera element
+	            // need to get down to the root PerspectiveCamera before addressing layers
 
-	                if('children' in object3D && object3D.children.length > 0){
-	                    if('children' in object3D.children[0] && object3D.children[0].children.length > 0){
-	                      if('children' in object3D.children[0].children[0] && object3D.children[0].children[0].children.length>0){
-	                        var object = object3D.children[0].children[0].children[0];
+	            // Gather the children of this a-camera and identify types
 
-	                          if(object.type === "PerspectiveCamera"){
+	            var childrenTypes = [];
 
-	                              if(data.eye === "both"){
-	                                object.layers.enable( 1 );             
-	                                object.layers.enable( 2 );              
-	                              }
-	                              else{
-	                                object.layers.enable(data.eye === 'left' ? 1:2);
-	                              }
+	            this.el.object3D.children.forEach( function (item, index, array) {
+	                childrenTypes[index] = item.type;
+	            });
 
-	                              this.layer_changed = true;
-	                          }
+	            // Retrieve the PerspectiveCamera
+	            var rootIndex = childrenTypes.indexOf("PerspectiveCamera");
+	            var rootCam = this.el.object3D.children[rootIndex];
 
-	                      }
-	                    }
-	                }
+	            if(originalData.eye === "both"){
+	                rootCam.layers.enable( 1 );
+	                rootCam.layers.enable( 2 );
+	              }
+	              else{
+	                rootCam.layers.enable(originalData.eye === 'left' ? 1:2);
+	              }
 	            }
 	       }
 

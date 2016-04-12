@@ -5,6 +5,8 @@
   </head>
   <body>
 
+    <a-scene>
+
     <a-assets>
 
 <!--
@@ -19,8 +21,6 @@
       </video>
 
     </a-assets>
-    <a-scene>
-
 
       <a-camera position="0 0 10" cursor-visible="false" stereocam="eye:left;"></a-camera>
 
@@ -28,16 +28,16 @@
                       radius: 100;
                       segmentsWidth: 64;
                       segmentsHeight: 64;"
-              material="shader: flat; src: #Mary;"
-              scale="-1 1 1" rotation="0 180 0" stereo="eye:left">
+              material="shader: flat; src:#Mary;"
+              scale="-1 1 1" stereo="eye:left">
       </a-entity>
 
       <a-entity geometry="primitive: sphere;
                       radius: 100;
                       segmentsWidth: 64;
                       segmentsHeight: 64;"
-              material="shader: flat; src: #Mary;"
-              scale="-1 1 1" rotation="0 180 0" stereo="eye:right">
+              material="shader: flat; src:#Mary;"
+              scale="-1 1 1" stereo="eye:right">
       </a-entity>
 
 

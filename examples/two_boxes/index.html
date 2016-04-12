@@ -9,14 +9,16 @@
       <a-light color="#333" position="0 5 0" type="ambient" intensity="0.2"></a-light>
       <a-light type="point" color="#EEE" intensity="1.0" position="3 3 10"></a-light>
 
-      <!-- 'left' eye entities will pass trough the camera in non-VR mode -->
+      <!-- 'left' eye entities will pass through the camera in non-VR mode -->
 
-      <a-camera position="0 0 10" cursor-color="black" stereocam="eye:left;"></a-camera>
+      <a-camera position="0 0 10" stereocam="eye:left;">
+          <a-cursor color="black"></a-cursor>
+      </a-camera>
 
       <!-- in VR mode, the first box is displayed only in the left eye, the second one in the right eye -->
 
       <a-entity geometry="primitive: box" material="color: #C03546" stereo="eye:left"></a-entity>
-      <a-entity geometry="primitive: box" material="color: #3546C0" position="0 5 0" stereo="eye: right"></a-entity> -->
+      <a-entity geometry="primitive: box" material="color: #3546C0" position="0 5 0" stereo="eye: right"></a-entity>
 
    </a-scene>
 

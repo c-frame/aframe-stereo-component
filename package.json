@@ -1,6 +1,6 @@
 {
   "name": "aframe-stereo-component",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Stereoscopic component for A-Frame VR.",
   "main": "index.js",
   "scripts": {
@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/oscarmarinmiro/aframe-stereo-component#readme",
   "devDependencies": {
-    "aframe": "aframevr/aframe#master",
+    "aframe": "^0.2.0",
     "browserify": "^12.0.1",
     "browserify-css": "^0.8.3",
     "budo": "^7.1.0",
