@@ -54,11 +54,11 @@ Install and use by directly including the [browser files](dist):
 
       <!-- we tell here the camera to render (outside VR mode, in monoscopic mode) everything without the 'stereo' component active
       and it it's active, only render those entities in the 'left' eye -->
-      
+
       <a-camera position="0 0 10" cursor-visible="false" stereocam="eye:left;"></a-camera>
-    
+
       <!-- native sphere, will render on 'left' eye, and will take only the first half of the video for projection -->
-      
+
       <a-entity geometry="primitive: sphere;
                       radius: 100;
                       segmentsWidth: 64;
@@ -66,9 +66,9 @@ Install and use by directly including the [browser files](dist):
               material="shader: flat; src: #Mary;"
               scale="-1 1 1" stereo="eye:left">
       </a-entity>
-      
+
       <!-- native sphere, will render on 'right' eye, and will take only the second half of the video for projection -->
-      
+
       <a-entity geometry="primitive: sphere;
                       radius: 100;
                       segmentsWidth: 64;
@@ -104,16 +104,16 @@ Install and use by directly including the [browser files](dist):
       <a-sky color="#FFF"></a-sky>
       <a-light color="#333" position="0 5 0" type="ambient" intensity="0.2"></a-light>
       <a-light type="point" color="#EEE" intensity="1.0" position="3 3 10"></a-light>
-      
+
       <!-- 'left' eye entities will pass trough the camera in non-VR mode -->
-      
+
       <a-camera position="0 0 10" cursor-color="black" stereocam="eye:left;"></a-camera>
 
       <!-- in VR mode, the first box is displayed only in the left eye, the second one in the right eye -->
-      
+
       <a-entity geometry="primitive: box" material="color: #C03546" stereo="eye:left"></a-entity>
       <a-entity geometry="primitive: box" material="color: #3546C0" position="0 5 0" stereo="eye: right"></a-entity>
-      
+
   </a-scene>
 
  </body>
@@ -127,14 +127,18 @@ Install and use by directly including the [browser files](dist):
 Install via NPM:
 
 ```bash
-npm install aframe-layer-component
+npm install aframe-stereo-component
 ```
 
 Then register and use.
 
 ```js
-require('aframe');
-require('aframe-layer-component');
+var AFRAME = require('aframe');
+var stereoComponent = require('aframe-stereo-component').stereo_component;
+var stereocamComponent = require('aframe-stereo-component').stereocam_component;
+
+AFRAME.registerComponent('stereo', stereoComponent);
+AFRAME.registerComponent('stereocam', stereocamComponent);
 ```
 
 #### Credits
