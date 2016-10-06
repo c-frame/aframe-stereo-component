@@ -3,11 +3,12 @@ module.exports = {
    // Put an object into left, right or both eyes.
    // If it's a video sphere, take care of correct stereo mapping for both eyes (if full dome)
    // or half the sphere (if half dome)
-   
+
   'stereo_component' : {
       schema: {
         eye: { type: 'string', default: "left"},
-        mode: { type: 'string', default: "full"}
+        mode: { type: 'string', default: "full"},
+        split: { type: 'string', default: "vertical"}
       },
        init: function(){
 
@@ -57,32 +58,32 @@ module.exports = {
               object3D.rotation.y = Math.PI / 2;
 
 
-              // If left eye, take first horizontal half of texture from video
+              // If left eye is set, and the split is horizontal, take the left half of the video texture. If the split
+              // is set to vertical, take the top/upper half of the video texture.
 
               if (this.data.eye === "left") {
-
-                  var uvs = geometry.faceVertexUvs[ 0 ];
-                  for (var i = 0; i < uvs.length; i++) {
-                      for (var j = 0; j < 3; j++) {
-                          uvs[ i ][ j ].x *= 0.5;
-                      }
-                  }
-
+                var uvs = geometry.faceVertexUvs[ 0 ];
+                var axis = this.data.split === "vertical" ? "y" : "x";
+                for (var i = 0; i < uvs.length; i++) {
+                    for (var j = 0; j < 3; j++) {
+                        uvs[ i ][ j ][ axis ] *= 0.5;
+                    }
+                }
               }
 
-              // If right eye, take last horizontal half of texture from video
+              // If right eye is set, and the split is horizontal, take the right half of the video texture. If the split
+              // is set to vertical, take the bottom/lower half of the video texture.
 
               if (this.data.eye === "right") {
+                var uvs = geometry.faceVertexUvs[ 0 ];
+                var axis = this.data.split === "vertical" ? "y" : "x";
+                for (var i = 0; i < uvs.length; i++) {
+                    for (var j = 0; j < 3; j++) {
+                        uvs[ i ][ j ].x *= 0.5;
+                        uvs[ i ][ j ].x += 0.5;
 
-                  var uvs = geometry.faceVertexUvs[ 0 ];
-                  for (var i = 0; i < uvs.length; i++) {
-                      for (var j = 0; j < 3; j++) {
-                          uvs[ i ][ j ].x *= 0.5;
-                          uvs[ i ][ j ].x += 0.5;
-
-                      }
-                  }
-
+                    }
+                }
               }
 
               // As AFrame 0.2.0 builds bufferspheres from sphere entities, transform
@@ -166,7 +167,6 @@ module.exports = {
 
        tick: function(time){
 
-            
             var originalData = this.data;
 
             // If layer never changed
