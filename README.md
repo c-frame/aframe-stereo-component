@@ -21,7 +21,7 @@ You can see demos for both examples below [here] (http://oscarmarinmiro.github.i
 | -------- | ----------- | ------------- |
 | eye      |  in which eye the entity is render VR mode ('left' or 'right')           | 'left               |
 | mode     | this property is for spheres holding a video texture. mode can be 'full' or 'half', depending if the original video is full 360 or only spans 180 degrees horizontally (half-dome)| 'full' |
-| split    | this property indicates whether to split the video texture horizontally (left and right hemispheres), or vertically, (top and bottom hemispheres)
+| split    | this property indicates whether to split the video texture horizontally (left and right hemispheres), or vertically, (top and bottom hemispheres) | 'horizontal'
 
 ### Usage
 

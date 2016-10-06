@@ -8,7 +8,7 @@ module.exports = {
       schema: {
         eye: { type: 'string', default: "left"},
         mode: { type: 'string', default: "full"},
-        split: { type: 'string', default: "vertical"}
+        split: { type: 'string', default: "horizontal"}
       },
        init: function(){
 
