@@ -39,7 +39,11 @@ module.exports = {
           // sphere entities are THREE.BufferGeometry.
 
           var validGeometries = [THREE.SphereGeometry, THREE.SphereBufferGeometry, THREE.BufferGeometry];
-          var isValidGeometry = validGeometries.indexOf(object3D.geometry) !== -1;
+          var isValidGeometry = validGeometries.some(function(geometry) {
+            return object3D.geometry instanceof geometry;
+          });
+
+          console.log('isValidGeometry?', isValidGeometry);
 
           if (isValidGeometry && this.material_is_a_video) {
 
