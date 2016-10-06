@@ -35,10 +35,13 @@ module.exports = {
 
           // In A-Frame 0.2.0, objects are all groups so sphere is the first children
           // Check if it's a sphere w/ video material, and if so
-          // Also note that in A-Frame 0.2.0 sphere entities are THREE.SphereBufferGeometry
+          // Note that in A-Frame 0.2.0, sphere entities are THREE.SphereBufferGeometry, while in A-Frame 0.3.0,
+          // sphere entities are THREE.BufferGeometry.
 
-          if((object3D.geometry instanceof THREE.SphereGeometry || object3D.geometry instanceof THREE.SphereBufferGeometry)
-                   && this.material_is_a_video) {
+          var validGeometries = [THREE.SphereGeometry, THREE.SphereBufferGeometry, THREE.BufferGeometry];
+          var isValidGeometry = validGeometries.indexOf(object3D.geometry) !== -1;
+
+          if (isValidGeometry && this.material_is_a_video) {
 
               // if half-dome mode, rebuild geometry (with default 100, radius, 64 width segments and 64 height segments)
 
@@ -56,7 +59,6 @@ module.exports = {
               // Panorama in front
 
               object3D.rotation.y = Math.PI / 2;
-
 
               // If left eye is set, and the split is horizontal, take the left half of the video texture. If the split
               // is set to vertical, take the top/upper half of the video texture.
@@ -79,8 +81,8 @@ module.exports = {
                 var axis = this.data.split === "vertical" ? "y" : "x";
                 for (var i = 0; i < uvs.length; i++) {
                     for (var j = 0; j < 3; j++) {
-                        uvs[ i ][ j ].x *= 0.5;
-                        uvs[ i ][ j ].x += 0.5;
+                        uvs[ i ][ j ][ axis ] *= 0.5;
+                        uvs[ i ][ j ][ axis ] += 0.5;
 
                     }
                 }
