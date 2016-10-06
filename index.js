@@ -43,8 +43,6 @@ module.exports = {
             return object3D.geometry instanceof geometry;
           });
 
-          console.log('isValidGeometry?', isValidGeometry);
-
           if (isValidGeometry && this.material_is_a_video) {
 
               // if half-dome mode, rebuild geometry (with default 100, radius, 64 width segments and 64 height segments)
