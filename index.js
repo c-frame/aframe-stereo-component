@@ -7,7 +7,8 @@ module.exports = {
   'stereo_component' : {
       schema: {
         eye: { type: 'string', default: "left"},
-        mode: { type: 'string', default: "full"}
+        mode: { type: 'string', default: "full"},
+        stereomode: {type: 'string', default: "side-by-side", oneOf:["side-by-side", "top-bottom"]}
       },
        init: function(){
 
@@ -64,7 +65,11 @@ module.exports = {
                   var uvs = geometry.faceVertexUvs[ 0 ];
                   for (var i = 0; i < uvs.length; i++) {
                       for (var j = 0; j < 3; j++) {
-                          uvs[ i ][ j ].x *= 0.5;
+                          if (this.data.stereomode === "side-by-side") {
+                              uvs[ i ][ j ].x *= 0.5;
+                          } else if (this.data.stereomode === "top-bottom") {
+                              uvs[ i ][ j ].y *= 0.5;
+                          }
                       }
                   }
 
@@ -77,9 +82,13 @@ module.exports = {
                   var uvs = geometry.faceVertexUvs[ 0 ];
                   for (var i = 0; i < uvs.length; i++) {
                       for (var j = 0; j < 3; j++) {
-                          uvs[ i ][ j ].x *= 0.5;
-                          uvs[ i ][ j ].x += 0.5;
-
+                          if (this.data.stereomode === "side-by-side") {
+                              uvs[ i ][ j ].x *= 0.5;
+                              uvs[ i ][ j ].x += 0.5;
+                          } else if (this.data.stereomode === "top-bottom") {
+                              uvs[ i ][ j ].y *= 0.5;
+                              uvs[ i ][ j ].y += 0.5;
+                          }
                       }
                   }
 
