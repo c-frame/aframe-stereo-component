@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/oscarmarinmiro/aframe-stereo-component#readme",
   "devDependencies": {
-    "aframe": "^0.2.0",
+    "aframe": "0.3.0",
     "browserify": "^12.0.1",
     "browserify-css": "^0.8.3",
     "budo": "^7.1.0",
