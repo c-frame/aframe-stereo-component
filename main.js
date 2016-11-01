@@ -1,4 +1,4 @@
-var AFRAME = require('aframe-core');
+var AFRAME = require('aframe');
 var stereoComponent = require('../index.js').stereo_component;
 var stereocamComponent = require('../index.js').stereocam_component;
 
