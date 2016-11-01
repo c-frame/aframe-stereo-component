@@ -8,6 +8,8 @@ This component builds on the ['layer' concept of THREE.js] (https://github.com/m
 
 If a video is used in a sphere with the 'stereo' component active, **the component will also enable playback in mobile devices, by attaching a 'click' event on the rendering canvas**. Thus, in mobile devices you must click on the screen (via cardboard v2.0 button or with your finger) for the video to start playing.
 
+**NOTE: for some reason (?) if the video elment is put inside scene 'assets' tag, a cross-origin issue is raised **
+
 You can see demos for both examples below [here] (http://oscarmarinmiro.github.io/aframe-stereo-component)
 
 ### 'stereocam' component properties (only for camera)
@@ -41,7 +43,6 @@ Install and use by directly including the [browser files](dist):
 <body>
     <a-scene>
 
-    <a-assets>
 
 <!--
       stereoscopic panoramic render by
@@ -51,7 +52,6 @@ Install and use by directly including the [browser files](dist):
       <!-- side by side equirectangular projected video -->
       <video id="Mary" src="examples/basic_development/textures/MaryOculus.webm" loop></video>
 
-    </a-assets>
 
       <!-- we tell here the camera to render (outside VR mode, in monoscopic mode) everything without the 'stereo' component active
       and it it's active, only render those entities in the 'left' eye -->
@@ -135,10 +135,9 @@ Install and use by directly including the [browser files](dist):
 </head>
 <body>
   <a-scene>
-    <a-assets>
-      <!-- top and bottom equirectangular projected video -->
-      <video id="video" src="path/to/top-bottom/mp4" loop></video>
-    </a-assets>
+  <!-- top and bottom equirectangular projected video -->
+  <video id="video" src="path/to/top-bottom/mp4" loop></video>
+
 
     <!-- here we tell the camera to render (outside VR mode, in monoscopic mode) everything without the 'stereo' component active
     and if it's active, only render those entities in the 'left' eye -->
