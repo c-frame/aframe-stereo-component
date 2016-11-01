@@ -3,42 +3,50 @@
     <title>A-Frame Layer Component - Basic</title>
     <script src="../build.js"></script>
   </head>
-  <body> 
+  <body>
+
+
+    <a-scene>
+
+      <video id="Mary" loop>
+          <source src="textures/MaryOculus.webm"/>
+      </video>
+
 
     <a-assets>
 
-<!--       
+<!--
       stereoscopic panoramic render by
       http://pedrofe.com/rendering-for-oculus-rift-with-arnold/
       http://www.meryproject.com/
- -->     
-
-      <video id="Mary" src="textures/MaryOculus.webm" loop></video>
-    </a-assets>   
-    <a-scene>
+ -->
 
 
-      <a-camera position="0 0 10" cursor-visible="false" stereocam="eye:left;"></a-camera>
+    </a-assets>
+
+
+
+      <a-camera position="0 0 0" stereocam="eye:left;"></a-camera>
 
       <a-entity geometry="primitive: sphere;
                       radius: 100;
                       segmentsWidth: 64;
                       segmentsHeight: 64;"
-              material="shader: flat; src: #Mary;"
-              scale="-1 1 1" rotation="0 180 0" stereo="eye:left">
+              material="shader: flat; src:#Mary;"
+              scale="-1 1 1" stereo="eye:left">
       </a-entity>
 
       <a-entity geometry="primitive: sphere;
                       radius: 100;
                       segmentsWidth: 64;
                       segmentsHeight: 64;"
-              material="shader: flat; src: #Mary;"
-              scale="-1 1 1" rotation="0 180 0" stereo="eye:right">
+              material="shader: flat; src:#Mary;"
+              scale="-1 1 1" stereo="eye:right">
       </a-entity>
+
 
 
     </a-scene>
 
   </body>
 </html>
-
