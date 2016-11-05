@@ -81,7 +81,13 @@ module.exports = {
                 var axis = this.data.split === "vertical" ? "y" : "x";
                 for (var i = 0; i < uvs.length; i++) {
                     for (var j = 0; j < 3; j++) {
-                        uvs[ i ][ j ][ axis ] *= 0.5;
+                        if (axis == "x") {
+                            uvs[ i ][ j ][ axis ] *= 0.5;
+                        }
+                        else {
+                            uvs[ i ][ j ][ axis ] *= 0.5;
+                            uvs[ i ][ j ][ axis ] += 0.5;
+                        }
                     }
                 }
               }
@@ -94,9 +100,13 @@ module.exports = {
                 var axis = this.data.split === "vertical" ? "y" : "x";
                 for (var i = 0; i < uvs.length; i++) {
                     for (var j = 0; j < 3; j++) {
-                        uvs[ i ][ j ][ axis ] *= 0.5;
-                        uvs[ i ][ j ][ axis ] += 0.5;
-
+                        if (axis == "x") {
+                            uvs[ i ][ j ][ axis ] *= 0.5;
+                            uvs[ i ][ j ][ axis ] += 0.5;
+                        }
+                        else {
+                            uvs[ i ][ j ][ axis ] *= 0.5;
+                        }
                     }
                 }
               }
