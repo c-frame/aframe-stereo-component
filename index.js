@@ -23,7 +23,7 @@ module.exports = {
           // Check if material is a video from html tag (object3D.material.map instanceof THREE.VideoTexture does not
           // always work
 
-          if(this.el.getAttribute("material")!==null && 'src' in this.el.getAttribute("material")) {
+          if(this.el.getAttribute("material")!==null && 'src' in this.el.getAttribute("material") && this.el.getAttribute("material").src !== "") {
             var src = this.el.getAttribute("material").src;
             // If src is a string, treat it like a selector, for aframe <= v0.3
             if ((toString.call(src) == '[object String]'
