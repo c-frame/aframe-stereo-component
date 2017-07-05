@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <title>A-Frame Layer Component - Basic</title>
+    <script src="../build.js"></script>
+  </head>
+  <body>
+
+    <a-scene antialias="true">
+      <!-- Paths to left and right images -->
+      <a-assets>
+        <img id="left" src="http://i.imgur.com/YAaxpv6.jpg">
+        <img id="right" src="http://i.imgur.com/JUxTnzK.jpg">
+      </a-assets>
+
+      <!-- Camera -->
+      <a-entity camera look-controls position="0 0 0" stereocam="eye:left;"></a-entity>
+
+      <!-- Sky sphere -->
+      <a-sky id="sky1" src="#left" stereo="eye:left"></a-sky>
+      <a-sky id="sky2" src="#right" stereo="eye:right"></a-sky>
+
+      <-- or alternatively -->
+
+      <!--<a-sky id="sky1" src="http://i.imgur.com/YAaxpv6.jpg" stereo="eye:left"></a-sky>-->
+      <!--<a-sky id="sky2" src="http://i.imgur.com/JUxTnzK.jpg" stereo="eye:right"></a-sky>-->
+
+
+    </a-scene>
+
+  </body>
+</html>
