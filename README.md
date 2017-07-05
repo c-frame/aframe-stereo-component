@@ -8,7 +8,7 @@ This component builds on the ['layer' concept of THREE.js] (https://github.com/m
 
 If a video is used in a sphere with the 'stereo' component active, **the component will also enable playback in mobile devices, by attaching a 'click' event on the rendering canvas**. Thus, in mobile devices you must click on the screen (via cardboard v2.0 button or with your finger) for the video to start playing.
 
-**NOTE: for some reason (?) if the video elment is put inside scene 'assets' tag, a cross-origin issue is raised **
+**NOTE: for some reason (?) if the video element is put inside scene 'assets' tag, a cross-origin issue is raised **
 
 You can see demos for both examples below [here] (http://oscarmarinmiro.github.io/aframe-stereo-component)
 
@@ -85,6 +85,45 @@ Install and use by directly including the [browser files](dist):
  </html>
 
 
+```
+
+#### Browser Installation. Stereoscopic panoramas (images)
+
+Install and use by directly including the [browser files](dist):
+
+```html
+<html>
+  <head>
+    <title>My A-Frame Scene</title>
+    <script src="https://aframe.io/releases/latest/aframe.min.js"></script>
+    <script src="aframe-stereo-component.js.min.js"></script>
+  </head>
+  <body>
+
+    <a-scene antialias="true">
+      <!-- Paths to left and right images -->
+      <a-assets>
+        <img id="left" src="http://i.imgur.com/YAaxpv6.jpg">
+        <img id="right" src="http://i.imgur.com/JUxTnzK.jpg">
+      </a-assets>
+
+      <!-- Camera -->
+      <a-entity camera look-controls position="0 0 0" stereocam="eye:left;"></a-entity>
+
+      <!-- Sky sphere -->
+      <a-sky id="sky1" src="#left" stereo="eye:left"></a-sky>
+      <a-sky id="sky2" src="#right" stereo="eye:right"></a-sky>
+
+      <-- or alternatively -->
+
+      <!--<a-sky id="sky1" src="http://i.imgur.com/YAaxpv6.jpg" stereo="eye:left"></a-sky>-->
+      <!--<a-sky id="sky2" src="http://i.imgur.com/JUxTnzK.jpg" stereo="eye:right"></a-sky>-->
+
+
+    </a-scene>
+
+  </body>
+</html>
 ```
 
 !["Two cubes in a scene, each one for each eye"](/cubes_stereo.png?raw=true "Two cubes in a scene, each one for each eye")
