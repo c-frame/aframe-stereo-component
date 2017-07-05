@@ -86,10 +86,10 @@ Install and use by directly including the [browser files](dist):
 
 
 ```
-
+!["Stereoscopic images"](/foto_stereo.png?raw=true "Stereoscopic video")
 #### Browser Installation. Stereoscopic panoramas (images)
 
-**if you have an over/under stereo panorama file, you can follow [this instructions](http://bl.ocks.org/bryik/4bf77096d3af66b11739caaf01393837) to split it
+**if you have an over/under stereo panorama file, you can follow [this instructions](http://bl.ocks.org/bryik/4bf77096d3af66b11739caaf01393837) to split it**
 
 Install and use by directly including the [browser files](dist):
 
@@ -227,3 +227,5 @@ The video used in the examples is from http://pedrofe.com/rendering-for-oculus-r
 Boilerplate code from https://github.com/ngokevin/aframe-component-boilerplate
 
 Code for adjusting sphere face vertex is from https://github.com/mrdoob/three.js/blob/master/examples/webvr_video.html
+
+Stereo images from [Dougstar02](https://www.reddit.com/r/oculus/comments/4yrmm2/i_took_some_360_ansel_stereo_screenshots_from_the/)
