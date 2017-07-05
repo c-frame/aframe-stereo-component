@@ -89,6 +89,8 @@ Install and use by directly including the [browser files](dist):
 
 #### Browser Installation. Stereoscopic panoramas (images)
 
+**if you have an over/under stereo panorama file, you can follow [this instructions](http://bl.ocks.org/bryik/4bf77096d3af66b11739caaf01393837) to split it
+
 Install and use by directly including the [browser files](dist):
 
 ```html
