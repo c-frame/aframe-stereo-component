@@ -6,7 +6,7 @@ This component builds on the ['layer' concept of THREE.js] (https://github.com/m
 - **'stereocam' component**, with tells an aframe camera which 'eye' to render in case of monoscopic display (without 'Entering VR'). The camera will render all entities without the stereo component, but if it encounters an entity with the 'stereo' component active, it will render only those in the same eye as defined here.
 - **'stereo' component**, which tells aframe to include an entity in either the 'right' eye or 'left' eye (you can also specify 'both', but this has the same effect as not using the 'stereo' component. *The component also enables stereoscopic video rendering projected on spheres*, so if a sphere (see example below) has the 'stereo' component enabled, if will only project half of the video texture (which one depends on the 'eye' property), so the result is stereoscopic video rendering, if you include two spheres. The component expects videos in side-by-side equirectangular projection (see the video example below).
 
-If a video is used in a sphere with the 'stereo' component active, **the component will also enable playback in mobile devices, by attaching a 'click' event on the rendering canvas**. Thus, in mobile devices you must click on the screen (via cardboard v2.0 button or with your finger) for the video to start playing.
+If a video is used in a sphere with the 'stereo' component active, **the component will also enable playback in mobile devices, by attaching a 'click' event on the rendering canvas**. Thus, in mobile devices you must click on the screen (via cardboard v2.0 button or with your finger) for the video to start playing. This can be disabled by setting the `playOnClick` variable to false.
 
 **NOTE: for some reason (?) if the video element is put inside scene 'assets' tag, a cross-origin issue is raised **
 
@@ -24,6 +24,7 @@ You can see demos for both examples below [here] (http://oscarmarinmiro.github.i
 | eye      |  in which eye the entity is render VR mode ('left' or 'right')           | 'left               |
 | mode     | this property is for spheres holding a video texture. mode can be 'full' or 'half', depending if the original video is full 360 or only spans 180 degrees horizontally (half-dome)| 'full' |
 | split    | this property indicates whether to split the video texture horizontally (left and right hemispheres), or vertically, (top and bottom hemispheres) | 'horizontal'
+| playOnClick | this property indicates whether the video will automatically be played on clicking on the canvas | true
 
 ### Usage
 
