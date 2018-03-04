@@ -8,7 +8,8 @@ module.exports = {
       schema: {
         eye: { type: 'string', default: "left"},
         mode: { type: 'string', default: "full"},
-        split: { type: 'string', default: "horizontal"}
+        split: { type: 'string', default: "horizontal"},
+        playOnClick: { type: 'boolean', default: true },
       },
        init: function(){
 
@@ -140,7 +141,7 @@ module.exports = {
            // If this value is false, it means that (a) this is a video on a sphere [see init method]
            // and (b) of course, tick is not added
 
-           if(!this.video_click_event_added){
+           if(!this.video_click_event_added && this.data.playOnClick){
                 if(typeof(this.el.sceneEl.canvas) !== 'undefined'){
 
                    // Get video DOM
