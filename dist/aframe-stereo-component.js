@@ -82,11 +82,10 @@
 	      schema: {
 	        eye: { type: 'string', default: "left"},
 	        mode: { type: 'string', default: "full"},
-	        split: { type: 'string', default: "horizontal"},
+	        split: { type: 'string', default: ""},
 	        playOnClick: { type: 'boolean', default: true },
 	      },
 	       init: function(){
-
 	          // Flag to acknowledge if 'click' on video has been attached to canvas
 	          // Keep in mind that canvas is the last thing initialized on a scene so have to wait for the event
 	          // or just check in every tick if is not undefined
@@ -94,6 +93,8 @@
 	          this.video_click_event_added = false;
 
 	          this.material_is_a_video = false;
+	          this.material_is_a_image = false;
+	          
 
 	          // Check if material is a video from html tag (object3D.material.map instanceof THREE.VideoTexture does not
 	          // always work
@@ -102,9 +103,10 @@
 	            var src = this.el.getAttribute("material").src;
 
 	            // If src is an object and its tagName is video...
-
 	            if (typeof src === 'object' && ('tagName' in src && src.tagName === "VIDEO")) {
 	              this.material_is_a_video = true;
+	            } else if (typeof src === 'object' && ('tagName' in src && src.tagName === "IMG")) {
+	              this.material_is_a_image = true;
 	            }
 	          }
 
@@ -120,7 +122,8 @@
 	            return object3D.geometry instanceof geometry;
 	          });
 
-	          if (isValidGeometry && this.material_is_a_video) {
+
+	          if (isValidGeometry && (this.material_is_a_video || this.material_is_a_image && !!this.data.split)) {
 
 	              // if half-dome mode, rebuild geometry (with default 100, radius, 64 width segments and 64 height segments)
 
@@ -183,14 +186,11 @@
 	              object3D.geometry = new THREE.BufferGeometry().fromGeometry(geometry);
 
 	          }
-	          else{
 
-	              // No need to attach video click if not a sphere and not a video, set this to true
-
-	              this.video_click_event_added = true;
-
+	          if(!this.material_is_a_video) {
+	            // No need to attach video click if not a sphere and not a video, set this to true
+	            this.video_click_event_added = true;
 	          }
-
 
 	       },
 
