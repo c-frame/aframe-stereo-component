@@ -1,4 +1,4 @@
-module.exports = {
+export default {
 
    // Put an object into left, right or both eyes.
    // If it's a video sphere, take care of correct stereo mapping for both eyes (if full dome)
