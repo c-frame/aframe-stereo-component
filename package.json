@@ -1,5 +1,5 @@
 {
-  "name": "aframe-stereo-component",
+  "name": "@quanticpotatoes/aframe-stereo-component",
   "version": "0.6.1",
   "description": "Stereoscopic component for A-Frame VR.",
   "main": "index.js",

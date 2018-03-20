@@ -20,98 +20,10 @@ module.exports = {
 
           this.material_is_a_video = false;
           this.material_is_a_image = false;
-          
 
-          // Check if material is a video from html tag (object3D.material.map instanceof THREE.VideoTexture does not
-          // always work
+          const object3D = this.el.object3D.children[0];
 
-          if(this.el.getAttribute("material")!==null && 'src' in this.el.getAttribute("material") && this.el.getAttribute("material").src !== "") {
-            var src = this.el.getAttribute("material").src;
-
-            // If src is an object and its tagName is video...
-            if (typeof src === 'object' && ('tagName' in src && src.tagName === "VIDEO")) {
-              this.material_is_a_video = true;
-            } else if (typeof src === 'object' && ('tagName' in src && src.tagName === "IMG")) {
-              this.material_is_a_image = true;
-            }
-          }
-
-          var object3D = this.el.object3D.children[0];
-
-          // In A-Frame 0.2.0, objects are all groups so sphere is the first children
-          // Check if it's a sphere w/ video material, and if so
-          // Note that in A-Frame 0.2.0, sphere entities are THREE.SphereBufferGeometry, while in A-Frame 0.3.0,
-          // sphere entities are THREE.BufferGeometry.
-
-          var validGeometries = [THREE.SphereGeometry, THREE.SphereBufferGeometry, THREE.BufferGeometry];
-          var isValidGeometry = validGeometries.some(function(geometry) {
-            return object3D.geometry instanceof geometry;
-          });
-
-
-          if (isValidGeometry && (this.material_is_a_video || this.material_is_a_image && !!this.data.split)) {
-
-              // if half-dome mode, rebuild geometry (with default 100, radius, 64 width segments and 64 height segments)
-
-              if (this.data.mode === "half") {
-
-                  var geo_def = this.el.getAttribute("geometry");
-                  var geometry = new THREE.SphereGeometry(geo_def.radius || 100, geo_def.segmentsWidth || 64, geo_def.segmentsHeight || 64, Math.PI / 2, Math.PI, 0, Math.PI);
-
-              }
-              else {
-                  var geo_def = this.el.getAttribute("geometry");
-                  var geometry = new THREE.SphereGeometry(geo_def.radius || 100, geo_def.segmentsWidth || 64, geo_def.segmentsHeight || 64);
-              }
-
-              // Panorama in front
-
-              object3D.rotation.y = Math.PI / 2;
-
-              // If left eye is set, and the split is horizontal, take the left half of the video texture. If the split
-              // is set to vertical, take the top/upper half of the video texture.
-
-              if (this.data.eye === "left") {
-                var uvs = geometry.faceVertexUvs[ 0 ];
-                var axis = this.data.split === "vertical" ? "y" : "x";
-                for (var i = 0; i < uvs.length; i++) {
-                    for (var j = 0; j < 3; j++) {
-                        if (axis == "x") {
-                            uvs[ i ][ j ][ axis ] *= 0.5;
-                        }
-                        else {
-                            uvs[ i ][ j ][ axis ] *= 0.5;
-                            uvs[ i ][ j ][ axis ] += 0.5;
-                        }
-                    }
-                }
-              }
-
-              // If right eye is set, and the split is horizontal, take the right half of the video texture. If the split
-              // is set to vertical, take the bottom/lower half of the video texture.
-
-              if (this.data.eye === "right") {
-                var uvs = geometry.faceVertexUvs[ 0 ];
-                var axis = this.data.split === "vertical" ? "y" : "x";
-                for (var i = 0; i < uvs.length; i++) {
-                    for (var j = 0; j < 3; j++) {
-                        if (axis == "x") {
-                            uvs[ i ][ j ][ axis ] *= 0.5;
-                            uvs[ i ][ j ][ axis ] += 0.5;
-                        }
-                        else {
-                            uvs[ i ][ j ][ axis ] *= 0.5;
-                        }
-                    }
-                }
-              }
-
-              // As AFrame 0.2.0 builds bufferspheres from sphere entities, transform
-              // into buffergeometry for coherence
-
-              object3D.geometry = new THREE.BufferGeometry().fromGeometry(geometry);
-
-          }
+          transformGeometry(object3D, this.el, this.data);
 
           if(!this.material_is_a_video) {
             // No need to attach video click if not a sphere and not a video, set this to true
@@ -124,8 +36,8 @@ module.exports = {
 
        update: function(oldData){
 
-            var object3D = this.el.object3D.children[0];
-            var data = this.data;
+            const object3D = this.el.object3D.children[0];
+            const data = this.data;
 
             if(data.eye === "both"){
               object3D.layers.set(0);
@@ -134,6 +46,7 @@ module.exports = {
               object3D.layers.set(data.eye === 'left' ? 1:2);
             }
 
+            if(data.split !== oldData.split) transformGeometry(object3D, this.el, this.data);
        },
 
        tick: function(time){
@@ -161,7 +74,6 @@ module.exports = {
 
                 }
            }
-
        }
      },
 
@@ -217,3 +129,92 @@ module.exports = {
 
   }
 };
+
+const transformGeometry = (object3D, element, data) => {
+
+    let material_is_a_video = false;
+    let material_is_a_image = false;
+
+    if(element.getAttribute("material")!==null && 'src' in element.getAttribute("material") && element.getAttribute("material").src !== "") {
+        const src = element.getAttribute("material").src;
+
+        // If src is an object and its tagName is video...
+        if (typeof src === 'object' && ('tagName' in src && src.tagName === "VIDEO")) {
+          material_is_a_video = true;
+        } else if (typeof src === 'object' && ('tagName' in src && src.tagName === "IMG")) {
+          material_is_a_image = true;
+        }
+      }
+
+      // In A-Frame 0.2.0, objects are all groups so sphere is the first children
+      // Check if it's a sphere w/ video material, and if so
+      // Note that in A-Frame 0.2.0, sphere entities are THREE.SphereBufferGeometry, while in A-Frame 0.3.0,
+      // sphere entities are THREE.BufferGeometry.
+
+      const validGeometries = [THREE.SphereGeometry, THREE.SphereBufferGeometry, THREE.BufferGeometry];
+      const isValidGeometry = validGeometries.some(function(geometry) {
+        return object3D.geometry instanceof geometry;
+      });
+
+
+      if (isValidGeometry && (material_is_a_video || material_is_a_image && !!data.split)) {
+
+          // if half-dome mode, rebuild geometry (with default 100, radius, 64 width segments and 64 height segments)
+
+          const geo_def = element.getAttribute("geometry");
+          let geometry = null;
+
+          if (data.mode === "half") {
+              geometry = new THREE.SphereGeometry(geo_def.radius || 100, geo_def.segmentsWidth || 64, geo_def.segmentsHeight || 64, Math.PI / 2, Math.PI, 0, Math.PI);
+          }
+          else {
+              geometry = new THREE.SphereGeometry(geo_def.radius || 100, geo_def.segmentsWidth || 64, geo_def.segmentsHeight || 64);
+          }
+
+          // Panorama in front
+          object3D.rotation.y = Math.PI / 2;
+
+          // If left eye is set, and the split is horizontal, take the left half of the video texture. If the split
+          // is set to vertical, take the top/upper half of the video texture.
+
+          if (data.eye === "left") {
+            var uvs = geometry.faceVertexUvs[ 0 ];
+            var axis = data.split === "vertical" ? "y" : "x";
+            for (var i = 0; i < uvs.length; i++) {
+                for (var j = 0; j < 3; j++) {
+                    if (axis == "x") {
+                        uvs[ i ][ j ][ axis ] *= 0.5;
+                    }
+                    else {
+                        uvs[ i ][ j ][ axis ] *= 0.5;
+                        uvs[ i ][ j ][ axis ] += 0.5;
+                    }
+                }
+            }
+          }
+
+          // If right eye is set, and the split is horizontal, take the right half of the video texture. If the split
+          // is set to vertical, take the bottom/lower half of the video texture.
+
+          if (data.eye === "right") {
+            var uvs = geometry.faceVertexUvs[ 0 ];
+            var axis = data.split === "vertical" ? "y" : "x";
+            for (var i = 0; i < uvs.length; i++) {
+                for (var j = 0; j < 3; j++) {
+                    if (axis == "x") {
+                        uvs[ i ][ j ][ axis ] *= 0.5;
+                        uvs[ i ][ j ][ axis ] += 0.5;
+                    }
+                    else {
+                        uvs[ i ][ j ][ axis ] *= 0.5;
+                    }
+                }
+            }
+          }
+
+          // As AFrame 0.2.0 builds bufferspheres from sphere entities, transform
+          // into buffergeometry for coherence
+
+          object3D.geometry = new THREE.BufferGeometry().fromGeometry(geometry);
+    }
+}
