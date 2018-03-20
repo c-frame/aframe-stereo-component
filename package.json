@@ -4,7 +4,7 @@
   "description": "Stereoscopic component for A-Frame VR.",
   "main": "lib/index.js",
   "scripts": {
-    "build": "webpack --mode production src/index.js --output lib/index.js",
+    "build": "babel src/index.js --out-file lib/index.js",
     "dev": "budo examples/main.js:build.js --dir examples --port 8000 --live --open -- -t [ babelify --extensions .js]",
     "dist": "webpack src/browser.js --mode development --output ./dist/aframe-stereo-component.js && webpack --mode production src/browser.js --output ./dist/aframe-stereo-component.min.js",
     "postpublish": "npm run build && npm run dist",
@@ -39,6 +39,7 @@
   "homepage": "https://github.com/oscarmarinmiro/aframe-stereo-component#readme",
   "devDependencies": {
     "aframe": "^0.6.0",
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
@@ -61,5 +62,6 @@
     "shelljs": "^0.6.0",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.12"
-  }
+  },
+  "dependencies": {}
 }
