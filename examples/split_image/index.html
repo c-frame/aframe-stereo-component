@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <title>A-Frame Layer Component - Split</title>
+    <script src="../build.js"></script>
+  </head>
+  <body>
+
+    <a-scene antialias="true">
+      <!-- Paths to left and right images -->
+      <a-assets>
+        <img id="both" src="textures/LR.jpg">
+      </a-assets>
+
+      <!-- Camera -->
+      <a-entity camera look-controls position="0 0 0" stereocam="eye:left"></a-entity>
+
+      <!-- Sky sphere -->
+      <a-sky id="sky1" src="#both" stereo="eye:left;split:vertical"></a-sky>
+      <a-sky id="sky2" src="#both" stereo="eye:right;split:vertical"></a-sky>
+
+      <!-- or alternatively -->
+
+      <!--<a-sky id="sky1" src="http://i.imgur.com/YAaxpv6.jpg" stereo="eye:left;split:vertical"></a-sky>-->
+      <!--<a-sky id="sky2" src="http://i.imgur.com/JUxTnzK.jpg" stereo="eye:right;split:vertical"></a-sky>-->
+
+
+    </a-scene>
+
+  </body>
+</html>

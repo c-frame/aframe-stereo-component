@@ -1,13 +1,13 @@
 {
-  "name": "aframe-stereo-component",
-  "version": "0.6.0",
+  "name": "@quanticpotatoes/aframe-stereo-component",
+  "version": "0.6.5",
   "description": "Stereoscopic component for A-Frame VR.",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "build": "browserify examples/main.js -o examples/build.js",
-    "dev": "budo examples/main.js:build.js --dir examples --port 8000 --live --open",
-    "dist": "webpack browser.js dist/aframe-stereo-component.js && webpack -p browser.js dist/aframe-stereo-component.min.js",
-    "postpublish": "npm run dist",
+    "build": "babel src/index.js --out-file lib/index.js",
+    "dev": "budo examples/main.js:build.js --dir examples --port 8000 --live --open -- -t [ babelify --extensions .js]",
+    "dist": "webpack src/browser.js --mode development --output ./dist/aframe-stereo-component.js && webpack --mode production src/browser.js --output ./dist/aframe-stereo-component.min.js",
+    "postpublish": "npm run build && npm run dist",
     "preghpages": "npm run build && rm -rf gh-pages && cp -r examples gh-pages",
     "ghpages": "npm run preghpages && ghpages -p gh-pages",
     "test": "karma start ./tests/karma.conf.js",
@@ -39,6 +39,11 @@
   "homepage": "https://github.com/oscarmarinmiro/aframe-stereo-component#readme",
   "devDependencies": {
     "aframe": "^0.6.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "babelify": "^8.0.0",
     "browserify": "^12.0.1",
     "browserify-css": "^0.8.3",
     "budo": "^7.1.0",
@@ -55,6 +60,8 @@
     "karma-sinon-chai": "^1.1.0",
     "mocha": "^2.3.4",
     "shelljs": "^0.6.0",
-    "webpack": "^1.12.9"
-  }
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.12"
+  },
+  "dependencies": {}
 }

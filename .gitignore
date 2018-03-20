@@ -4,5 +4,5 @@ gh-pages
 node_modules/
 npm-debug.log
 examples/build.js
-
+lib
 examples/build.js
