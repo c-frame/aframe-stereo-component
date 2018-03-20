@@ -1,6 +1,5 @@
 tests
 examples
-dist/*min*
 src
 *.png
 *.jpg
