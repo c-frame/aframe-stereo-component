@@ -111,7 +111,7 @@ Install and use by directly including the [browser files](dist):
       </a-assets>
 
       <!-- Camera -->
-      <a-entity camera look-controls position="0 0 0" stereocam="eye:left;"></a-entity>
+      <a-camera position="0 0 0" look-controls stereocam="eye:left;"></a-camera>
 
       <!-- Sky sphere -->
       <a-sky id="sky1" src="#left" stereo="eye:left"></a-sky>
@@ -178,7 +178,7 @@ Install and use by directly including the [browser files](dist):
 <body>
   <a-scene>
   <!-- top and bottom equirectangular projected video -->
-  <video id="video" src="path/to/top-bottom/mp4" loop></video>
+  <video id="video" src="path/to/top-bottom/mp4" autoplay loop></video>
 
 
     <!-- here we tell the camera to render (outside VR mode, in monoscopic mode) everything without the 'stereo' component active
@@ -186,17 +186,19 @@ Install and use by directly including the [browser files](dist):
     <a-camera position="0 0 10" cursor-visible="false" stereocam="eye:left;"></a-camera>
 
     <!-- native sphere, will render on 'left' eye, and will take only the first half (top) of the video for projection -->
-    <a-entity geometry="primitive: sphere; radius: 100; segmentsWidth: 64; segmentsHeight: 64;"
-        material="shader: flat; src: #video;"
-        scale="-1 1 1" stereo="eye:left; split: vertical">
-    </a-entity>
+    <a-videosphere src="#video" stereo="eye:left"></a-videosphere>
+
+      
 
     <!-- native sphere, will render on 'right' eye, and will take only the second half (bottom) of the video for projection -->
-    <a-entity geometry="primitive: sphere; radius: 100; segmentsWidth: 64; segmentsHeight: 64;"
-        material="shader: flat; src: #video;"
-        scale="-1 1 1" stereo="eye:right; split: vertical">
-    </a-entity>
+    <a-videosphere src="#video" stereo="eye:right"></a-videosphere>
   </a-scene>
+  <script>
+		window.addEventListener('click', function () {
+		 var v = document.querySelector('#video');
+		 v.play();
+		});
+	</script>
  </body>
  </html>
 ```
