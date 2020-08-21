@@ -1,7 +1,7 @@
 <html>
   <head>
     <title>A-Frame Layer Component - Basic</title>
-    <script src="../build.js"></script>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
   </head>
   <body>
 
@@ -13,7 +13,7 @@
       </a-assets>
 
       <!-- Camera -->
-      <a-entity camera look-controls position="0 0 0" stereocam="eye:left;"></a-entity>
+      <a-camera position="0 0 0" look-controls stereocam="eye:left;"></a-camera>
 
       <!-- Sky sphere -->
       <a-sky id="sky1" src="#left" stereo="eye:left"></a-sky>
