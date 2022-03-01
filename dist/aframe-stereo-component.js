@@ -139,48 +139,35 @@
 
 	              object3D.rotation.y = Math.PI / 2;
 
-	              // If left eye is set, and the split is horizontal, take the left half of the video texture. If the split
-	              // is set to vertical, take the top/upper half of the video texture.
 
-	              if (this.data.eye === "left") {
-	                var uvs = geometry.faceVertexUvs[ 0 ];
-	                var axis = this.data.split === "vertical" ? "y" : "x";
-	                for (var i = 0; i < uvs.length; i++) {
-	                    for (var j = 0; j < 3; j++) {
-	                        if (axis == "x") {
-	                            uvs[ i ][ j ][ axis ] *= 0.5;
-	                        }
-	                        else {
-	                            uvs[ i ][ j ][ axis ] *= 0.5;
-	                            uvs[ i ][ j ][ axis ] += 0.5;
-	                        }
-	                    }
-	                }
-	              }
+	            // Calculate texture offset and repeat and modify UV's
+	            // (cannot use in AFrame material params, since mappings are shared when pointing to the same texture,
+	            // thus, one eye overrides the other) -> https://stackoverflow.com/questions/16976365/two-meshes-same-texture-different-offset
 
-	              // If right eye is set, and the split is horizontal, take the right half of the video texture. If the split
-	              // is set to vertical, take the bottom/lower half of the video texture.
+	            var axis = this.data.split === 'horizontal' ? 'y' : 'x';
 
-	              if (this.data.eye === "right") {
-	                var uvs = geometry.faceVertexUvs[ 0 ];
-	                var axis = this.data.split === "vertical" ? "y" : "x";
-	                for (var i = 0; i < uvs.length; i++) {
-	                    for (var j = 0; j < 3; j++) {
-	                        if (axis == "x") {
-	                            uvs[ i ][ j ][ axis ] *= 0.5;
-	                            uvs[ i ][ j ][ axis ] += 0.5;
-	                        }
-	                        else {
-	                            uvs[ i ][ j ][ axis ] *= 0.5;
-	                        }
-	                    }
-	                }
-	              }
+	            // !!! NOTE THAT UV texture coordinates, start at the bottom left point of the texture, so y axis coordinates for left eye on horizontal split
+	            // are 0.5 - 1.0, and for the right eye are 0.0 - 0.5 (they are swapped from THREE.js 'y' axis logic)
 
-	              // As AFrame 0.2.0 builds bufferspheres from sphere entities, transform
-	              // into buffergeometry for coherence
+	            var offset = this.data.eye === 'left' ? (axis === 'y' ? {x: 0, y: 0} : {x: 0, y: 0.5}) : (axis === 'y' ? {x: 0.5, y: 0} : {x: 0, y: 0});
 
-	              object3D.geometry = new THREE.BufferGeometry().fromGeometry(geometry);
+	            var repeat = axis === 'y' ? {x: 0.5, y: 1} : {x: 1, y: 0.5};
+
+	            var uvAttribute = geometry.attributes.uv;
+
+	            for (var i = 0; i < uvAttribute.count; i++ ) {
+	                var u = uvAttribute.getX(i)*repeat.x + offset.x;
+	                var v = uvAttribute.getY(i)*repeat.y + offset.y;
+
+	                uvAttribute.setXY(i, u, v);
+
+	            }
+
+	            // Needed in BufferGeometry to update UVs
+
+	            uvAttribute.needsUpdate = true
+
+	            object3D.geometry = geometry
 
 	          }
 	          else{

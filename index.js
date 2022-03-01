@@ -70,22 +70,22 @@ module.exports = {
             // (cannot use in AFrame material params, since mappings are shared when pointing to the same texture,
             // thus, one eye overrides the other) -> https://stackoverflow.com/questions/16976365/two-meshes-same-texture-different-offset
 
-            const axis = this.data.split === 'horizontal' ? 'y' : 'x';
+            var axis = this.data.split === 'horizontal' ? 'y' : 'x';
 
             // !!! NOTE THAT UV texture coordinates, start at the bottom left point of the texture, so y axis coordinates for left eye on horizontal split
             // are 0.5 - 1.0, and for the right eye are 0.0 - 0.5 (they are swapped from THREE.js 'y' axis logic)
 
-            const offset = this.data.eye === 'left' ? (axis === 'y' ? {x: 0, y: 0} : {x: 0, y: 0.5}) : (axis === 'y' ? {x: 0.5, y: 0} : {x: 0, y: 0})
+            var offset = this.data.eye === 'left' ? (axis === 'y' ? {x: 0, y: 0} : {x: 0, y: 0.5}) : (axis === 'y' ? {x: 0.5, y: 0} : {x: 0, y: 0});
 
-            const repeat = axis === 'y' ? {x: 0.5, y: 1} : {x: 1, y: 0.5}
+            var repeat = axis === 'y' ? {x: 0.5, y: 1} : {x: 1, y: 0.5};
 
-            const uvAttribute = geometry.attributes.uv
+            var uvAttribute = geometry.attributes.uv;
 
-            for (let i = 0; i < uvAttribute.count; i++ ) {
-                let u = uvAttribute.getX(i)*repeat.x + offset.x
-                let v = uvAttribute.getY(i)*repeat.y + offset.y
+            for (var i = 0; i < uvAttribute.count; i++ ) {
+                var u = uvAttribute.getX(i)*repeat.x + offset.x;
+                var v = uvAttribute.getY(i)*repeat.y + offset.y;
 
-                uvAttribute.setXY(i, u, v)
+                uvAttribute.setXY(i, u, v);
 
             }
 
