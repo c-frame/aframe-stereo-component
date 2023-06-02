@@ -57,7 +57,7 @@ Install and use by directly including the [browser files](dist):
       <!-- we tell here the camera to render (outside VR mode, in monoscopic mode) everything without the 'stereo' component active
       and it it's active, only render those entities in the 'left' eye -->
 
-      <a-camera position="0 0 10" cursor-visible="false" stereocam="eye:left;"></a-camera>
+      <a-camera position="0 0 10" stereocam="eye:left;"></a-camera>
 
       <!-- native sphere, will render on 'left' eye, and will take only the first half of the video for projection -->
 
@@ -65,7 +65,7 @@ Install and use by directly including the [browser files](dist):
                       radius: 100;
                       segmentsWidth: 64;
                       segmentsHeight: 64;"
-              material="shader: flat; src: #Mary;"
+              material="shader: flat; src: #Mary; side:back;"
               scale="-1 1 1" stereo="eye:left">
       </a-entity>
 
@@ -75,7 +75,7 @@ Install and use by directly including the [browser files](dist):
                       radius: 100;
                       segmentsWidth: 64;
                       segmentsHeight: 64;"
-              material="shader: flat; src: #Mary;"
+              material="shader: flat; src: #Mary; side:back;"
               scale="-1 1 1" stereo="eye:right">
       </a-entity>
 
@@ -150,7 +150,9 @@ Install and use by directly including the [browser files](dist):
 
       <!-- 'left' eye entities will pass trough the camera in non-VR mode -->
 
-      <a-camera position="0 0 10" cursor-color="black" stereocam="eye:left;"></a-camera>
+      <a-camera position="0 0 10" stereocam="eye:left;">
+        <a-cursor color="black"></a-cursor>
+      </a-camera>
 
       <!-- in VR mode, the first box is displayed only in the left eye, the second one in the right eye -->
 
@@ -183,17 +185,17 @@ Install and use by directly including the [browser files](dist):
 
     <!-- here we tell the camera to render (outside VR mode, in monoscopic mode) everything without the 'stereo' component active
     and if it's active, only render those entities in the 'left' eye -->
-    <a-camera position="0 0 10" cursor-visible="false" stereocam="eye:left;"></a-camera>
+    <a-camera position="0 0 10" stereocam="eye:left;"></a-camera>
 
     <!-- native sphere, will render on 'left' eye, and will take only the first half (top) of the video for projection -->
     <a-entity geometry="primitive: sphere; radius: 100; segmentsWidth: 64; segmentsHeight: 64;"
-        material="shader: flat; src: #video;"
+        material="shader: flat; src: #video; side:back;"
         scale="-1 1 1" stereo="eye:left; split: vertical">
     </a-entity>
 
     <!-- native sphere, will render on 'right' eye, and will take only the second half (bottom) of the video for projection -->
     <a-entity geometry="primitive: sphere; radius: 100; segmentsWidth: 64; segmentsHeight: 64;"
-        material="shader: flat; src: #video;"
+        material="shader: flat; src: #video; side:back;"
         scale="-1 1 1" stereo="eye:right; split: vertical">
     </a-entity>
   </a-scene>
