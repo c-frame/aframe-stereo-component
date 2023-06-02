@@ -195,11 +195,13 @@ module.exports = {
             if(originalData.eye === "both"){
                 rootCam.layers.enable( 1 );
                 rootCam.layers.enable( 2 );
-              }
-              else{
-                rootCam.layers.enable(originalData.eye === 'left' ? 1:2);
-              }
             }
+            else{
+                rootCam.layers.enable(originalData.eye === 'left' ? 1:2);
+            }
+            this.layer_changed = true;
+            }
+            
        }
 
   }
