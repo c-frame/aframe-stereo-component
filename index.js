@@ -72,8 +72,10 @@ module.exports = {
 
             var axis = this.data.split === 'horizontal' ? 'y' : 'x';
 
-            // !!! NOTE THAT UV texture coordinates, start at the bottom left point of the texture, so y axis coordinates for left eye on horizontal split
-            // are 0.5 - 1.0, and for the right eye are 0.0 - 0.5 (they are swapped from THREE.js 'y' axis logic)
+            // If left eye is set, and the split is horizontal, take the left half of the video texture.
+            // If the split is set to vertical, take the top/upper half of the video texture.
+            // UV texture coordinates start at the bottom left point of the texture, so y axis coordinates for left eye on vertical split
+            // are 0.5 - 1.0, and for the right eye are 0.0 - 0.5
 
             var offset = this.data.eye === 'left' ? (axis === 'y' ? {x: 0, y: 0} : {x: 0, y: 0.5}) : (axis === 'y' ? {x: 0.5, y: 0} : {x: 0, y: 0});
 
