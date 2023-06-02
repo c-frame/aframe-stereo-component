@@ -93,6 +93,7 @@ module.exports = {
 
             uvAttribute.needsUpdate = true
 
+            this.originalGeometry = object3D.geometry;
             object3D.geometry = geometry
 
           }
@@ -105,6 +106,14 @@ module.exports = {
           }
 
 
+       },
+
+       remove() {
+           var object3D = this.el.object3D.children[0];
+           object3D.geometry.dispose();
+           if (this.originalGeometry) {
+               object3D.geometry = this.originalGeometry;
+           }
        },
 
        // On element update, put in the right layer, 0:both, 1:left, 2:right (spheres or not)
