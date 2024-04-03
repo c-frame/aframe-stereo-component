@@ -4,5 +4,4 @@ gh-pages
 node_modules/
 npm-debug.log
 examples/build.js
-
-examples/build.js
+package-lock.json
