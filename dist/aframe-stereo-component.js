@@ -74,9 +74,9 @@
 
 	module.exports = {
 
-	   // Put an object into left, right or both eyes.
-	   // If it's a video sphere, take care of correct stereo mapping for both eyes (if full dome)
-	   // or half the sphere (if half dome)
+	  // Put an object into left, right or both eyes.
+	  // If it's a video sphere, take care of correct stereo mapping for both eyes (if full dome)
+	  // or half the sphere (if half dome)
 
 	  'stereo_component' : {
 	      schema: {
@@ -115,7 +115,7 @@
 	          // Note that in A-Frame 0.2.0, sphere entities are THREE.SphereBufferGeometry, while in A-Frame 0.3.0,
 	          // sphere entities are THREE.BufferGeometry.
 
-	          var validGeometries = [THREE.SphereGeometry, THREE.SphereBufferGeometry, THREE.BufferGeometry];
+	          var validGeometries = [THREE.SphereGeometry, THREE.BufferGeometry];
 	          var isValidGeometry = validGeometries.some(function(geometry) {
 	            return object3D.geometry instanceof geometry;
 	          });
@@ -146,8 +146,10 @@
 
 	            var axis = this.data.split === 'horizontal' ? 'y' : 'x';
 
-	            // !!! NOTE THAT UV texture coordinates, start at the bottom left point of the texture, so y axis coordinates for left eye on horizontal split
-	            // are 0.5 - 1.0, and for the right eye are 0.0 - 0.5 (they are swapped from THREE.js 'y' axis logic)
+	            // If left eye is set, and the split is horizontal, take the left half of the video texture.
+	            // If the split is set to vertical, take the top/upper half of the video texture.
+	            // UV texture coordinates start at the bottom left point of the texture, so y axis coordinates for left eye on vertical split
+	            // are 0.5 - 1.0, and for the right eye are 0.0 - 0.5
 
 	            var offset = this.data.eye === 'left' ? (axis === 'y' ? {x: 0, y: 0} : {x: 0, y: 0.5}) : (axis === 'y' ? {x: 0.5, y: 0} : {x: 0, y: 0});
 
@@ -167,6 +169,7 @@
 
 	            uvAttribute.needsUpdate = true
 
+	            this.originalGeometry = object3D.geometry;
 	            object3D.geometry = geometry
 
 	          }
@@ -179,6 +182,14 @@
 	          }
 
 
+	       },
+
+	       remove: function(){
+	           var object3D = this.el.object3D.children[0];
+	           object3D.geometry.dispose();
+	           if (this.originalGeometry) {
+	               object3D.geometry = this.originalGeometry;
+	           }
 	       },
 
 	       // On element update, put in the right layer, 0:both, 1:left, 2:right (spheres or not)
@@ -231,51 +242,52 @@
 	  'stereocam_component':{
 
 	      schema: {
-	        eye: { type: 'string', default: "left"}
+	          eye: { type: 'string', default: "left"}
 	      },
 
-	       // Cam is not attached on init, so use a flag to do this once at 'tick'
+	      // Cam is not attached on init, so use a flag to do this once at 'tick'
 
-	       // Use update every tick if flagged as 'not changed yet'
+	      // Use update every tick if flagged as 'not changed yet'
 
-	       init: function(){
-	            // Flag to register if cam layer has already changed
-	            this.layer_changed = false;
-	       },
+	      init: function(){
+	          // Flag to register if cam layer has already changed
+	          this.layer_changed = false;
+	      },
 
-	       tick: function(time){
+	      tick: function(time){
 
-	            var originalData = this.data;
+	          var originalData = this.data;
 
-	            // If layer never changed
+	          // If layer never changed
 
-	            if(!this.layer_changed){
+	          if(!this.layer_changed){
 
-	            // because stereocam component should be attached to an a-camera element
-	            // need to get down to the root PerspectiveCamera before addressing layers
+	              // because stereocam component should be attached to an a-camera element
+	              // need to get down to the root PerspectiveCamera before addressing layers
 
-	            // Gather the children of this a-camera and identify types
+	              // Gather the children of this a-camera and identify types
 
-	            var childrenTypes = [];
+	              var childrenTypes = [];
 
-	            this.el.object3D.children.forEach( function (item, index, array) {
-	                childrenTypes[index] = item.type;
-	            });
+	              this.el.object3D.children.forEach( function (item, index, array) {
+	                  childrenTypes[index] = item.type;
+	              });
 
-	            // Retrieve the PerspectiveCamera
-	            var rootIndex = childrenTypes.indexOf("PerspectiveCamera");
-	            var rootCam = this.el.object3D.children[rootIndex];
+	              // Retrieve the PerspectiveCamera
+	              var rootIndex = childrenTypes.indexOf("PerspectiveCamera");
+	              var rootCam = this.el.object3D.children[rootIndex];
 
-	            if(originalData.eye === "both"){
-	                rootCam.layers.enable( 1 );
-	                rootCam.layers.enable( 2 );
+	              if(originalData.eye === "both"){
+	                  rootCam.layers.enable( 1 );
+	                  rootCam.layers.enable( 2 );
 	              }
 	              else{
-	                rootCam.layers.enable(originalData.eye === 'left' ? 1:2);
+	                  rootCam.layers.enable(originalData.eye === 'left' ? 1:2);
 	              }
-	            }
-	       }
 
+	              this.layer_changed = true;
+	          }
+	      }
 	  }
 	};
 
