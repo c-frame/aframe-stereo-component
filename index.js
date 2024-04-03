@@ -110,7 +110,7 @@ module.exports = {
 
        },
 
-       remove() {
+       remove: function(){
            var object3D = this.el.object3D.children[0];
            object3D.geometry.dispose();
            if (this.originalGeometry) {
