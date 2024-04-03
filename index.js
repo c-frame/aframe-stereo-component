@@ -41,7 +41,7 @@ module.exports = {
           // Note that in A-Frame 0.2.0, sphere entities are THREE.SphereBufferGeometry, while in A-Frame 0.3.0,
           // sphere entities are THREE.BufferGeometry.
 
-          var validGeometries = [THREE.SphereGeometry, THREE.SphereBufferGeometry, THREE.BufferGeometry];
+          var validGeometries = [THREE.SphereGeometry, THREE.BufferGeometry];
           var isValidGeometry = validGeometries.some(function(geometry) {
             return object3D.geometry instanceof geometry;
           });
