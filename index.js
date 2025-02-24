@@ -46,7 +46,7 @@ module.exports = {
             return object3D.geometry instanceof geometry;
           });
 
-          if (isValidGeometry && this.material_is_a_video) {
+          if (isValidGeometry) {
 
               // if half-dome mode, rebuild geometry (with default 100, radius, 64 width segments and 64 height segments)
 
@@ -97,11 +97,15 @@ module.exports = {
 
             this.originalGeometry = object3D.geometry;
             object3D.geometry = geometry
+             
+            // No need to attach video click if not a video
+
+            this.video_click_event_added = !this.material_is_a_video;
 
           }
           else{
 
-              // No need to attach video click if not a sphere and not a video, set this to true
+              // No need to attach video click if not a sphere
 
               this.video_click_event_added = true;
 
